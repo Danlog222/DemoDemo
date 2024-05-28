@@ -16,6 +16,10 @@ use Yii;
  */
 class Feedback extends \yii\db\ActiveRecord
 {
+
+    public bool $rules = false;
+
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -30,9 +34,17 @@ class Feedback extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['full_name', 'phone', 'feedback', 'image'], 'required'],
+            [['full_name', 'phone', 'feedback',], 'required'],
             [['created_at'], 'safe'],
-            [['full_name', 'phone', 'feedback', 'image'], 'string', 'max' => 255],
+            [['full_name', 'phone', 'feedback'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'jpg, jpeg, png'],
+            [['rules'], 'required', 'requiredValue' => 1, 'message' => 'Отметка поля обязательна'],
+            ['feedback', 'match', 'pattern' => '/^[а-яёА-ЯЁ\s-]+$/u'],
+            ['feedback' , 'string', 'min' => '20'],
+            ['full_name', 'match', 'pattern' => '/^([а-яёА-ЯЁ]+\s){2}([а-яёА-ЯЁ\-])+$/u'],
+            // ['full_name', 'match', 'pattern' => '/^([а-яёА-ЯЁ\s\-]+\s){2}[а-яёА-ЯЁ\s\-\s]+$/u'],
+            ['phone', 'match', 'pattern' => '/^\+7\(\d{3}\)\-\d{3}\-\d{2}\-\d{2}$/'],
+
         ];
     }
 
@@ -43,11 +55,22 @@ class Feedback extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'full_name' => 'Full Name',
-            'phone' => 'Phone',
-            'feedback' => 'Feedback',
-            'image' => 'Image',
-            'created_at' => 'Created At',
+            'full_name' => 'ФИО',
+            'phone' => 'Телефон',
+            'feedback' => 'Отзыв',
+            'imageFile' => 'Фото',
+            'created_at' => 'Временная метка',
+            'rules' => 'Согласие на обработку персональных данных',
         ];
+    }
+    public function upload($attr = 'image')
+    {
+        $this->$attr = Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
+        if ($this->validate()) {
+            $this->imageFile->saveAs('uploads/' . $this->$attr);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -1,0 +1,33 @@
+#feedback {
+    background-image: url('/web/uploads/body.jpg');
+    padding: 5rem;
+}
+
+.is-invalid{
+    animation: invalid 3s 1 ease;
+}
+
+@keyframes invalid {
+    0%{
+        box-shadow: 0 0 3px red;
+    }
+    50%{
+        box-shadow: 0 0 3px blueviolet;
+    }
+    100%{
+        box-shadow: 0 0 3px gold;
+    }
+}
+
+.invalid-feedback{
+    animation: feedback 2s 1 ease;
+}
+
+@keyframes feedback {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
