@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Управление категориями', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Управление категориями граждан', ['./category'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Управление Отделами', ['./department'], ['class' => 'btn btn-warning']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
