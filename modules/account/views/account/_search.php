@@ -1,7 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use app\models\Status;
+use yii\bootstrap5\Html;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\modules\account\models\AccountSearch $model */
@@ -18,23 +19,16 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'status_id')->dropDownList(Status::getStatus(),['prompt' => 'Выберите статус']) ?>
 
-    <?= $form->field($model, 'department_id') ?>
-
-    <?= $form->field($model, 'date') ?>
-
-    <?= $form->field($model, 'status_id') ?>
-
-    <?= $form->field($model, 'user_id') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'description') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Сброс', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

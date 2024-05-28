@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Department;
+use app\models\Status;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +9,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Application $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Applications', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Заявки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -15,12 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+    <p>   
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,13 +30,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'department_id',
-            'date',
-            'status_id',
-            'user_id',
-            'created_at',
-            'description',
+            [
+                'attribute' => 'id',
+                'value' => Html::encode($model->id)
+            ],
+            [
+                'attribute' => 'description',
+                'value' => Html::encode($model->description),
+            ],
+            [
+                'attribute' => 'department_id',
+                'value' => Html::encode(Department::getDepartment()[$model->department_id])
+            ],
+            [
+                'attribute' => 'date',
+                'value' => Html::encode(Html::encode(Yii::$app->formatter->asDate($model->date,'php:d.m.Y H:i:s')))
+            ],
+            [
+                'attribute' => 'status_id',
+                'value' => Html::encode(Html::encode(Status::getStatus()[$model->status_id]))
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => Html::encode(Yii::$app->formatter->asDate($model->created_at,'php:d.m.Y H:i:s'))
+            ],               
+            
         ],
     ]) ?>
 

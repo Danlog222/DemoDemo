@@ -39,9 +39,6 @@ class Application extends \yii\db\ActiveRecord
             [['department_id', 'status_id', 'user_id'], 'integer'],
             [['date', 'created_at'], 'safe'],
             [['description'], 'string', 'max' => 255],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Department::class, 'targetAttribute' => ['department_id' => 'id']],
         ];
     }
 
@@ -51,13 +48,13 @@ class Application extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'department_id' => 'Department ID',
-            'date' => 'Date',
-            'status_id' => 'Status ID',
-            'user_id' => 'User ID',
-            'created_at' => 'Created At',
-            'description' => 'Description',
+            'id' => 'Номер заявки',
+            'department_id' => 'Департамент',
+            'date' => 'Дата приёма',
+            'status_id' => 'Статус заявки',
+            'user_id' => 'Пользователь',
+            'created_at' => 'Время создания',
+            'description' => 'Описание причины',
         ];
     }
 

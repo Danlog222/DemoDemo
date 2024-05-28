@@ -4,6 +4,7 @@ namespace app\modules\account\controllers;
 
 use app\models\Application;
 use app\modules\account\models\AccountSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,8 +71,13 @@ class AccountController extends Controller
         $model = new Application();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->status_id = 1;
+                $model->user_id = Yii::$app->user->id;
+                $model->date = Yii::$app->formatter->asDate($model->date, 'php:Y-m-d H:i:s');
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();

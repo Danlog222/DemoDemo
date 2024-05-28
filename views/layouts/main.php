@@ -41,7 +41,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            !Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin
+            ? ['label' => 'Личный кабинет', 'url' => ['/account/account']]
+            : '',
+            !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+            ? ['label' => 'Административная панель', 'url' => ['/mfc-panel/application']]
+            : '',
             Yii::$app->user->isGuest
             ? ['label' => 'Регистрация', 'url' => ['/site/register']]
             : '',
@@ -49,10 +54,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 ? ['label' => 'Авторизация', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
+                    . ((!Yii::$app->user->identity->isAdmin)
+                    ?Html::submitButton(
                         'Выход (' . Yii::$app->user->identity->email . ')',
                         ['class' => 'nav-link btn btn-link logout']
                     )
+                    :Html::submitButton(
+                        'Выход (' . Yii::$app->user->identity->login . ')',
+                        ['class' => 'nav-link btn btn-link logout']
+                    ))
                     . Html::endForm()
                     . '</li>'
         ]

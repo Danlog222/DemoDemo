@@ -1,7 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use app\models\Department;
+use yii\bootstrap5\Html;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\Application $model */
@@ -12,17 +13,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'department_id')->textInput() ?>
+    <?= $form->field($model, 'department_id')->dropDownList(Department::getDepartment(), ['prompt' => 'Выберите отдел']) ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date')->textInput([
+        'type' => 'datetime-local',
+        'min' => date('Y-m-d') . 'T00:00'
+    ]) ?>
 
-    <?= $form->field($model, 'status_id')->textInput() ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'description')->textarea() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

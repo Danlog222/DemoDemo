@@ -48,7 +48,7 @@ class AccountSearch extends Application
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 5
+                'pageSize' => 4
             ],
             'sort' => [
                 'defaultOrder' => [

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "department".
@@ -52,5 +53,14 @@ class Department extends \yii\db\ActiveRecord
     public function getApplications()
     {
         return $this->hasMany(Application::class, ['department_id' => 'id']);
+    }
+
+    public static function getDepartment()
+    {
+        return (new Query())
+            ->select('title')
+            ->from('department')
+            ->indexBy('id')
+            ->column();
     }
 }

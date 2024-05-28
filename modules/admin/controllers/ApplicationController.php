@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\models\Application;
 use app\modules\admin\models\ApplicationSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -80,6 +81,25 @@ class ApplicationController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDone($id)
+    {
+        $model = Application::findOne($id);
+        $model->status_id = 2;
+        if($model->save(false)){
+            Yii::$app->session->setFlash('success', 'Статус успешно изменён!');
+            return $this->redirect(['index', 'id' => $model->id]);
+        }
+    }
+    public function actionCancel($id)
+    {
+        $model = Application::findOne($id);
+        $model->status_id = 3;
+        if($model->save(false)){
+            Yii::$app->session->setFlash('success', 'Статус успешно изменён!');
+            return $this->redirect(['index', 'id' => $model->id]);
+        }
     }
 
     /**

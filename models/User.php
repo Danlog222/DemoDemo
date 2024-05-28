@@ -123,4 +123,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function validatePassword($password){
         return Yii::$app->security->validatePassword($password,$this->password);
     }
+    public function getIsAdmin(){
+        return $this->role_id == Role::getRoleId('admin');
+    }
 }

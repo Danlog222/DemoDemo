@@ -5,6 +5,7 @@ namespace app\modules\admin\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Application;
+use Yii;
 
 /**
  * ApplicationSearch represents the model behind the search form of `app\models\Application`.
@@ -51,10 +52,14 @@ class ApplicationSearch extends Application
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'crated_at' => SORT_DESC,
+                    'created_at' => SORT_DESC,
                 ]
             ],
         ]);
+
+        if (Yii::$app->request->get('qwe')) {
+            $query->andFilterWhere(['like', 'date', date('Y-m-d')]);
+        }
 
         $this->load($params);
 
