@@ -20,9 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'email') ?>
         <?= $form->field($model, 'passport') ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
-        <?= $form->field($model, 'phone') ?>
+        <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::class, [
+    'mask' => '+7(999)-999-99-99',
+]) ?>
         <?= $form->field($model, 'category_id')->dropDownList(Category::getCategory(),['prompt' => 'Выберите категорию'])?>
-        <?= $form->field($model, 'rules')->checkbox() ?>
     
         <div class="form-group">
             <?= Html::submitButton('Зарегистрироватсья', ['class' => 'btn btn-primary']) ?>

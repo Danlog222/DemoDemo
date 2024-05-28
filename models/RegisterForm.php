@@ -33,7 +33,6 @@ class RegisterForm extends \yii\base\Model
     public string $password = '';
     public string $phone = '';
     public int $category_id = 0;
-    public bool $rules = false;
     
     /**
      * {@inheritdoc}
@@ -51,10 +50,15 @@ class RegisterForm extends \yii\base\Model
         return [
             [['full_name', 'login', 'email', 'passport', 'password', 'phone','category_id'], 'required'],
             [['full_name', 'login', 'email', 'passport', 'password', 'phone',], 'string', 'max' => 255],
-            [['email'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'email'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['email'], 'unique', 'targetClass' => User::class,],
+            [['login'], 'unique', 'targetClass' => User::class,],
             ['email', 'email'],
-            [['rules'],'required', 'requiredValue' => 1, 'message' => 'пользовательское соглашение должно быть отмечено'],
+            ['full_name', 'match', 'pattern' => '/^[а-яёА-ЯЁ\s]+$/u'],
+            ['login', 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/'],
+            ['passport', 'match', 'pattern' => '/^\d{4}\s\d{6}$/'],
+            ['password', 'match', 'pattern' => '/^[a-zA-Z0-9]+$/'],
+            ['password', 'string', 'min' => 6], 
+            ['phone', 'match', 'pattern' => '/^\+7\(\d{3}\)\-\d{3}\-\d{2}\-\d{2}$/'],
         ];
     }
 
@@ -64,16 +68,16 @@ class RegisterForm extends \yii\base\Model
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'full_name' => 'Full Name',
-            'login' => 'Login',
+            'full_name' => 'ФИО',
+            'login' => 'Логин',
             'email' => 'Email',
-            'passport' => 'Passport',
-            'password' => 'Password',
-            'phone' => 'Phone',
-            'role_id' => 'Role ID',
+            'passport' => 'Серия и номер пасспорта',
+            'password' => 'Пароль',
+            'phone' => 'Телефон',
+            'role_id' => 'Роль в системе',
             'auth_key' => 'Auth Key',
-            'category_id' => 'Category ID',
+            'category_id' => 'Категоиря граждан',
+            'rules' => 'Пользовательское соглашение',
         ];
     }
  public function registerUser(){

@@ -30,6 +30,9 @@ class LoginForm extends Model
             [['email', 'password'], 'required'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['email', 'email'],
+            ['password', 'match', 'pattern' => '/^[a-zA-Z0-9]+$/'],
+            ['password', 'string', 'min' => 6], 
         ];
     }
 

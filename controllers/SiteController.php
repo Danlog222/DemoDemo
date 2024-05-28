@@ -134,6 +134,7 @@ class SiteController extends Controller
         if ($user = $model->registerUser()) {
             if(Yii::$app->user->login($user)){
                   return Yii::$app->response->redirect('/');
+                  Yii::$app->session->setFlash('success', 'Пользователь успешно зарегистрирован');
             }
         }
     }
